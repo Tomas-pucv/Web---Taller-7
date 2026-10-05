@@ -3,7 +3,13 @@ const cors = require("cors");
 
 const app = express();
 
-app.use(cors());
+// app.use(cors());
+
+app.use((req, res, next) => {
+  console.log("Llegó:", req.method, req.url);
+  next();
+});
+
 app.use(express.json());
 
 let posts = [
@@ -56,13 +62,22 @@ app.post("/api/posts", (req, res) => {
   res.status(201).json(nuevoPost);
 });
 
-app.use((req, res) => {
-  res.status(404).json({ error: "Ruta no encontrada" });
+app.delete('/api/posts/:id', (req, res) => {
+  const { id } = req.params;
+  const index = posts.findIndex(p => p.id === parseInt(id));
+
+  if (index === -1) {
+    return res.status(404).json({ error: "Publicación no encontrada" });
+  }
+
+  // Elimina la publicación del arreglo
+  posts.splice(index, 1);
+
+  res.status(200).json({ message: "Eliminado" })
 });
 
-app.use((req, res, next) => {
-  console.log("Llegó:", req.method, req.url);
-  next();
+app.use((req, res) => {
+  res.status(404).json({ error: "Ruta no encontrada" });
 });
 
 const PORT = 3000;
