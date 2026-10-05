@@ -1,6 +1,6 @@
 ## Taller 7
 
-###¿Qué encontrarás en este repositorio?
+### ¿Qué encontrarás en este repositorio?
 
 El desarrollo de Taller 7 de Ing Web de la PUCV, 2do semestre 2026
 
